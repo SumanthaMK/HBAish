@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Countdown</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        color: #fff;
+        text-align: center;
+    }
+
+    .container {
+        background: rgba(0,0,0,0.3);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 500px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .countdown {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    .time-box {
+        background: rgba(255,255,255,0.2);
+        padding: 15px;
+        border-radius: 12px;
+        width: 22%;
+    }
+
+    .time-box span {
+        font-size: 2rem;
+        font-weight: bold;
+        display: block;
+    }
+
+    .time-box small {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    /* Birthday Page */
+    .birthday {
+        display: none;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    .birthday h1 {
+        font-size: 3rem;
+    }
+
+    .birthday p {
+        font-size: 1.2rem;
+        margin-top: 15px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Countdown Section -->
+    <div id="countdownPage">
+        <h1>🎉 Goobamma Birthday Countdown 🎉</h1>
+
+        <div class="countdown">
+            <div class="time-box">
+                <span id="days">0</span>
+                <small>Days</small>
+            </div>
+            <div class="time-box">
+                <span id="hours">0</span>
+                <small>Hours</small>
+            </div>
+            <div class="time-box">
+                <span id="minutes">0</span>
+                <small>Minutes</small>
+            </div>
+            <div class="time-box">
+                <span id="seconds">0</span>
+                <small>Seconds</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Birthday Page -->
+    <div id="birthdayPage" class="birthday">
+        <h1>🎂 Happy Birthday! 🎂</h1>
+        <p>May all your dreams come true 💖</p>
+        <p>Have a wonderful and amazing day 🎉</p>
+    </div>
+
+</div>
+
+<script>
+    // SET YOUR BIRTHDAY DATE HERE (YYYY-MM-DD HH:MM:SS)
+    const birthdayDate = new Date("2026-01-07 00:00:00").getTime();
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    const countdownPage = document.getElementById("countdownPage");
+    const birthdayPage = document.getElementById("birthdayPage");
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = birthdayDate - now;
+
+        if (distance <= 0) {
+            countdownPage.style.display = "none";
+            birthdayPage.style.display = "block";
+            clearInterval(timer);
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        daysEl.textContent = days;
+        hoursEl.textContent = hours;
+        minutesEl.textContent = minutes;
+        secondsEl.textContent = seconds;
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
